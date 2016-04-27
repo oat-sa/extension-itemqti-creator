@@ -1,30 +1,28 @@
 {
-    "name": "oat-sa/extension-itemqti-creator",
-    "description" : "Editor for QTI items",
-    "type" : "tao-extension",
-    "authors" : [
-        {
-        "name": "Open Assessment Technologies SA"
-        }
-    ],
-    "keywords" : [
-        "tao",
-        "computer-based-assessment"
-    ],
-    "homepage" : "http://www.taotesting.com",
-    "license" : [
-        "GPL-2.0"
-    ],
-    "extra" : {
-        "tao-extension-name" : "itemqtiCreator"
-    },
-    "minimum-stability" : "dev",
-    "require": {
-        "oat-sa/oatbox-extension-installer": "dev-master"
-    },
-    "autoload" : {
-        "psr-4" : {
-            "oat\\itemqtiCreator\\" : ""
-        }
-    } 
+  "name": "oat-sa/extension-itemqti-creator",
+  "description": "Editor for QTI items",
+  "type": "tao-extension",
+  "authors": [{
+    "name": "Open Assessment Technologies SA"
+  }],
+  "keywords": [
+    "tao",
+    "computer-based-assessment"
+  ],
+  "homepage": "http://www.taotesting.com",
+  "license": [
+    "GPL-2.0"
+  ],
+  "extra": {
+    "tao-extension-name": "itemqtiCreator"
+  },
+  "minimum-stability": "dev",
+  "require": {
+    "oat-sa/oatbox-extension-installer": "dev-master"
+  },
+  "autoload": {
+    "psr-4": {
+      "oat\\itemqtiCreator\\": ""
+    }
+  }
 }
