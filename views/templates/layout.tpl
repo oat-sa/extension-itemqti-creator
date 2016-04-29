@@ -14,7 +14,7 @@ $contentTemplate = Layout::getContentTemplate();
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title><?= Layout::getTitle() ?></title>
-    <link rel="shortcut icon" href="<?= Template::img('img/favicon.ico') ?>"/>
+    <link rel="shortcut icon" href="<?= Template::img('favicon.ico', 'tao') ?>"/>
     <link rel="stylesheet" href="<?= Template::css('preview.css','taoItems') ?>" />
     <?= tao_helpers_Scriptloader::render() ?>
     <?= Layout::getAmdLoader() ?>
@@ -23,10 +23,8 @@ $contentTemplate = Layout::getContentTemplate();
 </head>
 
 <body>
-    <div class="content-wrap">
-        <div id="feedback-box"></div>
-        <?php Template::inc($contentTemplate['path'], $contentTemplate['ext']); ?>
-    </div>
+    <?php Template::inc($contentTemplate['path'], $contentTemplate['ext']); ?>
+    <div id="feedback-box"></div>
     <div class="loading-bar"></div>
 </body>
 </html>
