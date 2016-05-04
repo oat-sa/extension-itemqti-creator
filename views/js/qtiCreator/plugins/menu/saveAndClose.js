@@ -49,7 +49,6 @@ define([
 
             itemCreator.on('saved', function(){
                 window.close();
-
             });
         },
 

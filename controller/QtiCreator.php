@@ -56,6 +56,8 @@ class QtiCreator extends \oat\taoQtiItem\controller\QtiCreator
 
         //load the creator config for this item
         $config = $this->getCreatorConfig($item);
+        $config->removePlugin('back');
+        $config->addPlugin('saveAndClose', 'itemqtiCreator/qtiCreator/plugins/menu/saveAndClose', 'menu');
 
         //the client config, with the controller to start
         $this->setData('client_config_url', $this->getClientConfigUrl(array(
@@ -65,6 +67,7 @@ class QtiCreator extends \oat\taoQtiItem\controller\QtiCreator
         )));
 
         $this->setData('config', $config->toArray());
+
         $this->setData('content-template', array('QtiCreator/index.tpl', 'taoQtiItem'));
 
         $this->setView('layout.tpl', 'itemqtiCreator');
