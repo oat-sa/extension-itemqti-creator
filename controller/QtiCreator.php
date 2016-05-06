@@ -51,7 +51,7 @@ class QtiCreator extends \oat\taoQtiItem\controller\QtiCreator
 
         $item = new core_kernel_classes_Resource(tao_helpers_Uri::decode($this->getRequestParameter('id')));
         if (!$item->exists()) {
-            throw new common_exception_Error('We\'re unable to find the selected item.');
+            throw new common_exception_Error('We\'re unable to find the item '.$item->getUri());
         }
 
         //load the creator config for this item
