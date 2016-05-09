@@ -18,6 +18,7 @@
  *
  *
  */
+use oat\itemqtiCreator\controller\QtiCreator;
 
 return array(
     'name' => 'itemqtiCreator',
@@ -27,13 +28,22 @@ return array(
     'version' => '1.0.0',
 	'author' => 'Open Assessment Technologies SA',
 	'requires' => array(
-        'taoQtiItem' => '>=2.27.0'
+        'taoQtiItem' => '>=2.27.0',
+	    'taoLti' => '>=1.3.0'
     ),
     'managementRole' => 'http://www.tao.lu/Ontologies/generis.rdf#itemqtiCreatorManager',
     'acl' => array(
         array('grant', 'http://www.tao.lu/Ontologies/generis.rdf#itemqtiCreatorManager', array('ext'=>'itemqtiCreator')),
+        array('grant', 'http://www.tao.lu/Ontologies/generis.rdf#AnonymousRole', array('act' => 'oat\itemqtiCreator\controller\AuthorTool@launch')),
+        array('grant', 'http://www.imsglobal.org/imspurl/lis/v1/vocab/membership#ContentDeveloper', array('act' => 'oat\itemqtiCreator\controller\AuthorTool@run')),
+        array('grant', 'http://www.tao.lu/Ontologies/generis.rdf#AnonymousRole', array('act' => 'oat\itemqtiCreator\controller\PreviewTool@launch')),
+        array('grant', 'http://www.imsglobal.org/imspurl/lis/v1/vocab/membership#ContentDeveloper', array('act' => 'oat\itemqtiCreator\controller\PreviewTool@run')),
+        array('grant', 'http://www.imsglobal.org/imspurl/lis/v1/vocab/membership#ContentDeveloper', array('controller'=> QtiCreator::class))
     ),
     'install' => array(
+        'rdf' => array(
+            __DIR__.'/install/role.rdf'
+        )
     ),
     'uninstall' => array(
     ),
