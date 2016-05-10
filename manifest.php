@@ -19,13 +19,14 @@
  *
  */
 use oat\itemqtiCreator\controller\QtiCreator;
+use oat\itemqtiCreator\controller\QtiPreview;
 
 return array(
     'name' => 'itemqtiCreator',
     'label' => 'QTI Item Creator',
     'description' => 'Editor for QTI items',
     'license' => 'GPL-2.0',
-    'version' => '1.0.0',
+    'version' => '1.1.0',
 	'author' => 'Open Assessment Technologies SA',
 	'requires' => array(
         'taoQtiItem' => '>=2.27.0',
@@ -45,6 +46,8 @@ return array(
             __DIR__.'/install/role.rdf'
         )
     ),
+
+    'update' => 'oat\\itemqtiCreator\\scripts\\update\\Updater',
     'uninstall' => array(
     ),
     'routes' => array(

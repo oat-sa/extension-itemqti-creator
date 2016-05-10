@@ -36,7 +36,7 @@ class QtiCreator extends \oat\taoQtiItem\controller\QtiCreator
 
     /**
      * Let's you open the Item Creator from the given URL :
-     * pcgAuth/QtiCreator/index?id=encoded_item_uri
+     * itemqtiCreator/QtiCreator/index?id=encoded_item_uri
      *
      */
     public function index()

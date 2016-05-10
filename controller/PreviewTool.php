@@ -24,27 +24,38 @@ namespace oat\itemqtiCreator\controller;
 use taoLti_actions_ToolModule;
 use tao_models_classes_accessControl_AclProxy;
 use tao_helpers_Uri;
+use common_exception_Error;
+use core_kernel_classes_Resource;
+use tao_helpers_Request;
 /**
- * LTI tool to author items using the QtiCreator 
+ * LTI tool to review qti items
  */
 class PreviewTool extends taoLti_actions_ToolModule
 {
     /**
      * (non-PHPdoc)
      * @see taoLti_actions_ToolModule::run()
+     * @requiresRight id READ
      */
     public function run()
     {
         if (!$this->hasRequestParameter('id')) {
             return $this->returnError(__('No item has been specified'));
-        } 
-        $params = array('uri' => \tao_helpers_Uri::encode($this->getRequestParameter('id')));
-        if (tao_models_classes_accessControl_AclProxy::hasAccess('index', 'QtiPreview','taoQtiItem', $params)) {
-            // user authorised to author the item
-            $this->forward('index', 'QtiPreview', 'taoQtiItem', $params);
-        } else {
-            // user NOT authorised to select the Delivery
-            $this->returnError(__('You are not authorized to view this item'), false);
         }
+        if(tao_helpers_Request::isAjax()){
+            throw new common_exception_Error("Wrong request mode, this is a plain document.");
+        }
+        
+        $item = new core_kernel_classes_Resource(tao_helpers_Uri::decode($this->getRequestParameter('id')));
+        if (!$item->exists()) {
+            throw new common_exception_Error('We\'re unable to find the item '.$item->getUri());
+        }
+        
+        $this->setData('client_config_url', $this->getClientConfigUrl());
+        
+        $this->setData('previewUrl', \tao_helpers_Uri::url('index', 'QtiPreview', 'taoQtiItem', array('uri' => $item->getUri(), 'lang' => DEFAULT_LANG)));
+        $this->setData('content-template', array('QtiPreview/index.tpl', 'itemqtiCreator'));
+        
+        $this->setView('layout.tpl', 'itemqtiCreator');
     }
 }
