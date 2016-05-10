@@ -15,25 +15,42 @@
  *
  * Copyright (c) 2016 (original work) Open Assessment Technologies SA ;
  */
+
+
+/**
+ * This plugin add a "save & close" button, that does that.
+ * The close means either going back to a configured returnUrl (from config.properties.returnUrl)
+ * or close the window.
+ *
+ * @author Bertrand Chevrier <bertrand@taotesting.com>
+ */
 define([
     'jquery',
+    'lodash',
     'i18n',
     'core/plugin',
     'ui/hider',
     'tpl!taoQtiItem/qtiCreator/plugins/button'
-], function($, __, pluginFactory, hider, buttonTpl){
+], function($, _, __, pluginFactory, hider, buttonTpl){
     'use strict';
 
+    /**
+     * Returns the configured plugin
+     * @returns {Function} the plugin
+     */
     return pluginFactory({
+
         name : 'saveAndClose',
 
         /**
-         * Initialize the plugin (called during runner's init)
+         * Initialize the plugin (called during host's init)
          */
         init : function init(){
             var self = this;
             var itemCreator = this.getHost();
+            var config      = itemCreator.getConfig();
 
+            //create the button
             this.$element = $(buttonTpl({
                 icon: 'save',
                 title: __('Save and close the creator'),
@@ -48,10 +65,23 @@ define([
             this.hide();
 
             itemCreator.on('saved', function(){
-                window.close();
+                //either move to the return URL or close the window. (delay for better visual feedback)
+                if(config && config.properties && _.isString(config.properties.returnUrl)){
+                    _.delay(function(){
+                        window.location = config.properties.returnUrl;
+                    }, 300);
+                } else {
+                    _.delay(function(){
+                        self.enable(); //close might fail
+                        window.close();
+                    }, 300);
+                }
             });
         },
 
+        /**
+         * Hook to the host's render
+         */
         render : function render(){
 
             //attach the element to the menu area
@@ -63,7 +93,7 @@ define([
         },
 
         /**
-         * Called during the runner's destroy phase
+         * Hook to the host's destroy
          */
         destroy : function destroy (){
             this.$element.remove();
