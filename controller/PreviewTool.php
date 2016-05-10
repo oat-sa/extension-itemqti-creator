@@ -28,7 +28,7 @@ use common_exception_Error;
 use core_kernel_classes_Resource;
 use tao_helpers_Request;
 /**
- * LTI tool to author items using the QtiCreator
+ * LTI tool to review qti items
  */
 class PreviewTool extends taoLti_actions_ToolModule
 {
