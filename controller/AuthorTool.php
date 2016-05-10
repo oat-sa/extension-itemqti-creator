@@ -22,6 +22,8 @@
 namespace oat\itemqtiCreator\controller;
 
 use taoLti_actions_ToolModule;
+use taoLti_models_classes_LtiService;
+use taoLti_models_classes_LtiLaunchData;
 use tao_models_classes_accessControl_AclProxy;
 use tao_helpers_Uri;
 /**
@@ -38,8 +40,17 @@ class AuthorTool extends taoLti_actions_ToolModule
         if (!$this->hasRequestParameter('id')) {
             return $this->returnError(__('No item has been specified'));
         } elseif (tao_models_classes_accessControl_AclProxy::hasAccess('index', 'QtiCreator','itemqtiCreator', array('id' => $this->getRequestParameter('id')))) {
+
+            $parameters = array('id' => $this->getRequestParameter('id'));
+
+            //retrieve the return URL from the LTI session
+            $launchData = taoLti_models_classes_LtiService::singleton()->getLtiSession()->getLaunchData();
+            if ($launchData->hasVariable(taoLti_models_classes_LtiLaunchData::LAUNCH_PRESENTATION_RETURN_URL)) {
+                $parameters['returnUrl'] = $launchData->getVariable(taoLti_models_classes_LtiLaunchData::LAUNCH_PRESENTATION_RETURN_URL);
+            }
+
             // user authorised to author the item
-            $this->forward('index', 'QtiCreator', null, array('id' => $this->getRequestParameter('id')));
+            $this->forward('index', 'QtiCreator', null, $parameters);
         } else {
             // user NOT authorised to select the Delivery
             $this->returnError(__('You are not authorized to author this item'), false);
