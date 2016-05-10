@@ -25,7 +25,7 @@ use taoLti_actions_ToolModule;
 use tao_models_classes_accessControl_AclProxy;
 use tao_helpers_Uri;
 /**
- * LTI tool to author items using the QtiCreator 
+ * LTI tool to author items using the QtiCreator
  */
 class PreviewTool extends taoLti_actions_ToolModule
 {
@@ -37,11 +37,11 @@ class PreviewTool extends taoLti_actions_ToolModule
     {
         if (!$this->hasRequestParameter('id')) {
             return $this->returnError(__('No item has been specified'));
-        } 
+        }
         $params = array('uri' => \tao_helpers_Uri::encode($this->getRequestParameter('id')));
-        if (tao_models_classes_accessControl_AclProxy::hasAccess('index', 'QtiPreview','taoQtiItem', $params)) {
+        if (tao_models_classes_accessControl_AclProxy::hasAccess('index', 'QtiPreview','itemqtiCreator', $params)) {
             // user authorised to author the item
-            $this->forward('index', 'QtiPreview', 'taoQtiItem', $params);
+            $this->forward('index', 'QtiPreview', 'itemqtiCreator', $params);
         } else {
             // user NOT authorised to select the Delivery
             $this->returnError(__('You are not authorized to view this item'), false);

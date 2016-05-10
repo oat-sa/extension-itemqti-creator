@@ -27,17 +27,16 @@ use tao_helpers_Request;
 use tao_helpers_Uri;
 
 /**
- * Overrides the QtiCreator controller in order to provide a standalone mode of the item creator
+ * Provides a standalone entry point for the item preview
  *
  * @author Bertrand Chevrier <bertrand@taotesting.com>
  */
-class QtiCreator extends \oat\taoQtiItem\controller\QtiCreator
+class QtiPreview extends \tao_actions_CommonModule
 {
 
     /**
-     * Let's you open the Item Creator from the given URL :
-     * itemqtiCreator/QtiCreator/index?id=encoded_item_uri
-     *
+     * Let's you open the preview of an item from the following URL :
+     * itemqtiCreator/QtiPreview/index?id=encoded_item_uri
      */
     public function index()
     {
@@ -54,21 +53,10 @@ class QtiCreator extends \oat\taoQtiItem\controller\QtiCreator
             throw new common_exception_Error('We\'re unable to find the item '.$item->getUri());
         }
 
-        //load the creator config for this item
-        $config = $this->getCreatorConfig($item);
-        $config->removePlugin('back');
-        $config->addPlugin('saveAndClose', 'itemqtiCreator/qtiCreator/plugins/menu/saveAndClose', 'menu');
+        $this->setData('client_config_url', $this->getClientConfigUrl());
 
-        //the client config, with the controller to start
-        $this->setData('client_config_url', $this->getClientConfigUrl(array(
-            'extension'  => 'taoQtiItem',
-            'module'     => 'QtiCreator',
-            'action'     => 'index'
-        )));
-
-        $this->setData('config', $config->toArray());
-
-        $this->setData('content-template', array('QtiCreator/index.tpl', 'taoQtiItem'));
+        $this->setData('previewUrl', \tao_helpers_Uri::url('index', 'QtiPreview', 'taoQtiItem', array('uri' => $item->getUri(), 'lang' => DEFAULT_LANG)));
+        $this->setData('content-template', array('QtiPreview/index.tpl', 'itemqtiCreator'));
 
         $this->setView('layout.tpl', 'itemqtiCreator');
     }

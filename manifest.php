@@ -19,13 +19,14 @@
  *
  */
 use oat\itemqtiCreator\controller\QtiCreator;
+use oat\itemqtiCreator\controller\QtiPreview;
 
 return array(
     'name' => 'itemqtiCreator',
     'label' => 'QTI Item Creator',
     'description' => 'Editor for QTI items',
     'license' => 'GPL-2.0',
-    'version' => '1.0.0',
+    'version' => '1.1.0',
 	'author' => 'Open Assessment Technologies SA',
 	'requires' => array(
         'taoQtiItem' => '>=2.27.0',
@@ -38,13 +39,16 @@ return array(
         array('grant', 'http://www.imsglobal.org/imspurl/lis/v1/vocab/membership#ContentDeveloper', array('act' => 'oat\itemqtiCreator\controller\AuthorTool@run')),
         array('grant', 'http://www.tao.lu/Ontologies/generis.rdf#AnonymousRole', array('act' => 'oat\itemqtiCreator\controller\PreviewTool@launch')),
         array('grant', 'http://www.imsglobal.org/imspurl/lis/v1/vocab/membership#ContentDeveloper', array('act' => 'oat\itemqtiCreator\controller\PreviewTool@run')),
-        array('grant', 'http://www.imsglobal.org/imspurl/lis/v1/vocab/membership#ContentDeveloper', array('controller'=> QtiCreator::class))
+        array('grant', 'http://www.imsglobal.org/imspurl/lis/v1/vocab/membership#ContentDeveloper', array('controller'=> QtiCreator::class)),
+        array('grant', 'http://www.imsglobal.org/imspurl/lis/v1/vocab/membership#ContentDeveloper', array('controller'=> QtiPreview::class))
     ),
     'install' => array(
         'rdf' => array(
             __DIR__.'/install/role.rdf'
         )
     ),
+
+    'update' => 'oat\\itemqtiCreator\\scripts\\update\\Updater',
     'uninstall' => array(
     ),
     'routes' => array(
