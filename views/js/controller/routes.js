@@ -23,9 +23,9 @@ define(function(){
     'use strict';
 
     return {
-        'QtiPreview' : {
+        'PreviewTool' : {
             'actions' : {
-                'index' : 'controller/QtiPreview/index'
+                'run' : 'controller/PreviewTool/run'
             }
         }
     };

@@ -39,8 +39,7 @@ return array(
         array('grant', 'http://www.imsglobal.org/imspurl/lis/v1/vocab/membership#ContentDeveloper', array('act' => 'oat\itemqtiCreator\controller\AuthorTool@run')),
         array('grant', 'http://www.tao.lu/Ontologies/generis.rdf#AnonymousRole', array('act' => 'oat\itemqtiCreator\controller\PreviewTool@launch')),
         array('grant', 'http://www.imsglobal.org/imspurl/lis/v1/vocab/membership#ContentDeveloper', array('act' => 'oat\itemqtiCreator\controller\PreviewTool@run')),
-        array('grant', 'http://www.imsglobal.org/imspurl/lis/v1/vocab/membership#ContentDeveloper', array('controller'=> QtiCreator::class)),
-        array('grant', 'http://www.imsglobal.org/imspurl/lis/v1/vocab/membership#ContentDeveloper', array('controller'=> QtiPreview::class))
+        array('grant', 'http://www.imsglobal.org/imspurl/lis/v1/vocab/membership#ContentDeveloper', array('controller'=> QtiCreator::class))
     ),
     'install' => array(
         'rdf' => array(

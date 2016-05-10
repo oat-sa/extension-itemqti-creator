@@ -36,14 +36,6 @@ class Updater extends \common_ext_ExtensionUpdater
      * @param string $initialVersion
      */
     public function update($initialVersion){
-        $currentVersion = $initialVersion;
-
-        if($currentVersion == '1.0.0'){
-            AclProxy::applyRule(new AccessRule('grant','http://www.imsglobal.org/imspurl/lis/v1/vocab/membership#ContentDeveloper', array('controller'=> QtiPreview::class)));
-            $currentVersion = '1.1.0';
-        }
-
-        $this->setVersion($currentVersion);
+        $this->skip('1.0.0','1.1.0');
     }
-
 }
