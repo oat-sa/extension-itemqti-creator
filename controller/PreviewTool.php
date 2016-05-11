@@ -27,6 +27,9 @@ use tao_helpers_Uri;
 use common_exception_Error;
 use core_kernel_classes_Resource;
 use tao_helpers_Request;
+use taoLti_models_classes_LtiService;
+use taoLti_models_classes_LtiLaunchData;
+
 /**
  * LTI tool to review qti items
  */
@@ -45,17 +48,24 @@ class PreviewTool extends taoLti_actions_ToolModule
         if(tao_helpers_Request::isAjax()){
             throw new common_exception_Error("Wrong request mode, this is a plain document.");
         }
-        
+
         $item = new core_kernel_classes_Resource(tao_helpers_Uri::decode($this->getRequestParameter('id')));
         if (!$item->exists()) {
             throw new common_exception_Error('We\'re unable to find the item '.$item->getUri());
         }
-        
+
         $this->setData('client_config_url', $this->getClientConfigUrl());
-        
+
         $this->setData('previewUrl', \tao_helpers_Uri::url('index', 'QtiPreview', 'taoQtiItem', array('uri' => $item->getUri(), 'lang' => DEFAULT_LANG)));
+
+        //retrieve the return URL from the LTI session
+        $launchData = taoLti_models_classes_LtiService::singleton()->getLtiSession()->getLaunchData();
+        if ($launchData->hasVariable(taoLti_models_classes_LtiLaunchData::LAUNCH_PRESENTATION_RETURN_URL)) {
+            $this->setData('returnUrl', $launchData->getVariable(taoLti_models_classes_LtiLaunchData::LAUNCH_PRESENTATION_RETURN_URL));
+        }
+
         $this->setData('content-template', array('QtiPreview/index.tpl', 'itemqtiCreator'));
-        
+
         $this->setView('layout.tpl', 'itemqtiCreator');
     }
 }

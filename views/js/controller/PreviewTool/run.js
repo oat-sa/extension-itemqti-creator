@@ -37,11 +37,9 @@ define([
          * Entry point
          */
         start : function start(){
-            try {
-                previewLauncher();
-            } catch(err){
+            previewLauncher().catch(function(err){
                 feedback().error('It seems the preview of the item couldn\'t be launched : ' + err.message);
-            }
+            });
         }
     };
 

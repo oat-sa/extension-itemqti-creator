@@ -26,8 +26,9 @@ use taoLti_models_classes_LtiService;
 use taoLti_models_classes_LtiLaunchData;
 use tao_models_classes_accessControl_AclProxy;
 use tao_helpers_Uri;
+
 /**
- * LTI tool to author items using the QtiCreator 
+ * LTI tool to author items using the QtiCreator
  */
 class AuthorTool extends taoLti_actions_ToolModule
 {

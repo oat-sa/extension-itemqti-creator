@@ -23,28 +23,45 @@
  * @author Bertrand Chevrier <bertrand@taotesting.com>
  */
 define([
+    'jquery',
     'lodash',
     'module',
+    'core/promise',
     'taoItems/preview/preview'
-], function(_, module, preview){
+], function($, _, module, Promise, preview){
     'use strict';
 
     /**
      * Launch the preview of an item
-     * @param {String} [url] - the configured preview URL (could be configured in the module's config as well)
-     * @throws {TypeError} without a preview URL
+     * @param {String} [previewUrl] - the configured preview URL (could be configured in the module's config as well)
+     * @param {String} [returnUrl] - where to go on close URL (could be configured in the module's config as well)
+     * @returns {Promise} resolve once the preview is shown
      */
-    var previewLauncher = function previewLauncher(previewUrl){
+    var previewLauncher = function previewLauncher(previewUrl, returnUrl){
 
         var config = module.config();
 
         previewUrl = previewUrl || config.previewUrl;
+        returnUrl = config.returnUrl;
+
         if(_.isEmpty(previewUrl)){
-            throw new TypeError('Unable to to run the preview without a launch URL');
+            return Promise.reject(new TypeError('Unable to to run the preview without a launch URL'));
         }
 
         preview.init(config.previewUrl);
-        preview.show();
+        return preview
+            .show()
+            .then(function(){
+                //listen on the button once the preview is shown.
+                //FIXME It's a fragile implementation that may break on GUI changes. This should be migrated to the plugin system.
+                $('.preview-closer').on('click', function closeHandler(e){
+                    if(!_.isEmpty(returnUrl)){
+                        _.delay(function(){
+                            window.location = returnUrl;
+                        }, 300);
+                    }
+                });
+            });
     };
 
     return previewLauncher;
