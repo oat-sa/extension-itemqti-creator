@@ -59,24 +59,28 @@ define([
             })).on('click', function saveHandler(e){
                 e.preventDefault();
                 self.disable();
-                itemCreator.trigger('save');
+
+
+                itemCreator
+                  .on('saved.closing', function(){
+                    itemCreator.off('saved.closing');
+
+                    //either move to the return URL or close the window. (delay for better visual feedback)
+                    if(config && config.properties && _.isString(config.properties.returnUrl)){
+                        _.delay(function(){
+                            window.location = config.properties.returnUrl;
+                        }, 300);
+                    } else {
+                        _.delay(function(){
+                            self.enable(); //close might fail
+                            window.close();
+                        }, 300);
+                    }
+                  })
+                  .trigger('save');
             });
 
             this.hide();
-
-            itemCreator.on('saved', function(){
-                //either move to the return URL or close the window. (delay for better visual feedback)
-                if(config && config.properties && _.isString(config.properties.returnUrl)){
-                    _.delay(function(){
-                        window.location = config.properties.returnUrl;
-                    }, 300);
-                } else {
-                    _.delay(function(){
-                        self.enable(); //close might fail
-                        window.close();
-                    }, 300);
-                }
-            });
         },
 
         /**
