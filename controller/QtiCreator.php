@@ -58,6 +58,7 @@ class QtiCreator extends \oat\taoQtiItem\controller\QtiCreator
         $config = $this->getCreatorConfig($item);
         $config->removePlugin('back');
         $config->addPlugin('saveAndClose', 'itemqtiCreator/qtiCreator/plugins/menu/saveAndClose', 'menu');
+        $config->addPlugin('close', 'itemqtiCreator/qtiCreator/plugins/menu/close', 'menu');
 
         if($this->hasRequestParameter('returnUrl')){
             $config->setProperty('returnUrl', $this->getRequestParameter('returnUrl'));
