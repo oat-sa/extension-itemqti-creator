@@ -26,6 +26,7 @@ module.exports = function(grunt) {
             paths : {
                 'itemqtiCreator' : root + '/itemqtiCreator/views/js',
                 'taoItems' : root + '/taoItems/views/js',
+                'taoItemsCss' : root + '/taoItems/views/css',
                 'taoQtiItem' : root + '/taoQtiItem/views/js'
             },
             modules : [{
