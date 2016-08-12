@@ -18,7 +18,7 @@
 
 
 /**
- * This plugin add a "save & close" button, that does that.
+ * This plugin add a "close" button, that does that.
  * The close means either going back to a configured returnUrl (from config.properties.returnUrl)
  * or close the window.
  *
@@ -40,44 +40,38 @@ define([
      */
     return pluginFactory({
 
-        name : 'saveAndClose',
+        name : 'close',
 
         /**
          * Initialize the plugin (called during host's init)
          */
         init : function init(){
             var self = this;
+
             var itemCreator = this.getHost();
             var config      = itemCreator.getConfig();
 
             //create the button
             this.$element = $(buttonTpl({
-                icon: 'save',
-                title: __('Save and close the creator'),
-                text : __('Save & Close'),
+                icon: 'close',
+                title: __('Close the creator, without saving'),
+                text : __('Close'),
                 cssClass: ''
-            })).on('click', function saveHandler(e){
+            })).on('click', function closeHandler(e){
                 e.preventDefault();
                 self.disable();
 
-
-                itemCreator
-                  .on('saved.closing', function(){
-                    itemCreator.off('saved.closing');
-
-                    //either move to the return URL or close the window. (delay for better visual feedback)
-                    if(config && config.properties && _.isString(config.properties.returnUrl)){
-                        _.delay(function(){
-                            window.location = config.properties.returnUrl;
-                        }, 300);
-                    } else {
-                        _.delay(function(){
-                            self.enable(); //close might fail
-                            window.close();
-                        }, 300);
-                    }
-                  })
-                  .trigger('save');
+                //either move to the return URL or close the window. (delay for better visual feedback)
+                if(config && config.properties && _.isString(config.properties.returnUrl)){
+                    _.delay(function(){
+                        window.location = config.properties.returnUrl;
+                    }, 300);
+                } else {
+                    _.delay(function(){
+                        self.enable(); //close might fail
+                        window.close();
+                    }, 300);
+                }
             });
 
             this.hide();
