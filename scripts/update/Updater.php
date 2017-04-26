@@ -36,6 +36,6 @@ class Updater extends \common_ext_ExtensionUpdater
      * @param string $initialVersion
      */
     public function update($initialVersion){
-        $this->skip('1.0.0','1.2.2');
+        $this->skip('1.0.0','2.0.0');
     }
 }
