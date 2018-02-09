@@ -30,7 +30,7 @@ return array(
 	'author' => 'Open Assessment Technologies SA',
 	'requires' => array(
         'taoQtiItem' => '>=2.27.0',
-        'taoLti' => '>=1.3.0'
+        'taoLti' => '>=4.2.0'
     ),
     'managementRole' => 'http://www.tao.lu/Ontologies/generis.rdf#itemqtiCreatorManager',
     'acl' => array(

@@ -21,20 +21,26 @@
 
 namespace oat\itemqtiCreator\controller;
 
-use taoLti_actions_ToolModule;
-use taoLti_models_classes_LtiService;
-use taoLti_models_classes_LtiLaunchData;
+use oat\taoLti\controller\ToolModule;
+use oat\taoLti\models\classes\LtiLaunchData;
+use oat\taoLti\models\classes\LtiService;
 use tao_models_classes_accessControl_AclProxy;
-use tao_helpers_Uri;
 
 /**
  * LTI tool to author items using the QtiCreator
  */
-class AuthorTool extends taoLti_actions_ToolModule
+class AuthorTool extends ToolModule
 {
     /**
      * (non-PHPdoc)
-     * @see taoLti_actions_ToolModule::run()
+     * @see ToolModule::run()
+     * @return void
+     * @throws \InterruptedActionException
+     * @throws \ResolverException
+     * @throws \common_exception_Error
+     * @throws \common_exception_IsAjaxAction
+     * @throws \oat\taoLti\models\classes\LtiException
+     * @throws \oat\taoLti\models\classes\LtiVariableMissingException
      */
     public function run()
     {
@@ -45,9 +51,9 @@ class AuthorTool extends taoLti_actions_ToolModule
             $parameters = array('id' => $this->getRequestParameter('id'));
 
             //retrieve the return URL from the LTI session
-            $launchData = taoLti_models_classes_LtiService::singleton()->getLtiSession()->getLaunchData();
-            if ($launchData->hasVariable(taoLti_models_classes_LtiLaunchData::LAUNCH_PRESENTATION_RETURN_URL)) {
-                $parameters['returnUrl'] = $launchData->getVariable(taoLti_models_classes_LtiLaunchData::LAUNCH_PRESENTATION_RETURN_URL);
+            $launchData = LtiService::singleton()->getLtiSession()->getLaunchData();
+            if ($launchData->hasVariable(LtiLaunchData::LAUNCH_PRESENTATION_RETURN_URL)) {
+                $parameters['returnUrl'] = $launchData->getVariable(LtiLaunchData::LAUNCH_PRESENTATION_RETURN_URL);
             }
 
             // user authorised to author the item
