@@ -21,8 +21,6 @@
 
 namespace oat\itemqtiCreator\scripts\update;
 
-use oat\itemqtiCreator\controller\QtiPreview;
-
 /**
  * Extension update script
  */
