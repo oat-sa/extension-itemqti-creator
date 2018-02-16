@@ -21,10 +21,6 @@
 
 namespace oat\itemqtiCreator\scripts\update;
 
-use oat\tao\model\accessControl\func\AclProxy;
-use oat\tao\model\accessControl\func\AccessRule;
-use oat\itemqtiCreator\controller\QtiPreview;
-
 /**
  * Extension update script
  */
@@ -35,7 +31,8 @@ class Updater extends \common_ext_ExtensionUpdater
      * Update the extension
      * @param string $initialVersion
      */
-    public function update($initialVersion){
-        $this->skip('1.0.0','2.0.0');
+    public function update($initialVersion)
+    {
+        $this->skip('1.0.0', '2.0.1');
     }
 }
