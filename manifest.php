@@ -26,11 +26,11 @@ return array(
     'label' => 'QTI Item Creator',
     'description' => 'Editor for QTI items',
     'license' => 'GPL-2.0',
-    'version' => '2.0.0',
+    'version' => '2.0.1',
 	'author' => 'Open Assessment Technologies SA',
 	'requires' => array(
         'taoQtiItem' => '>=2.27.0',
-        'taoLti' => '>=1.3.0'
+        'taoLti' => '>=5.0.0'
     ),
     'managementRole' => 'http://www.tao.lu/Ontologies/generis.rdf#itemqtiCreatorManager',
     'acl' => array(

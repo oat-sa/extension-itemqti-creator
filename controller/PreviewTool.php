@@ -21,47 +21,61 @@
 
 namespace oat\itemqtiCreator\controller;
 
-use taoLti_actions_ToolModule;
-use tao_models_classes_accessControl_AclProxy;
-use tao_helpers_Uri;
 use common_exception_Error;
 use core_kernel_classes_Resource;
+use oat\taoLti\controller\ToolModule;
+use oat\taoLti\models\classes\LtiLaunchData;
+use oat\taoLti\models\classes\LtiService;
 use tao_helpers_Request;
-use taoLti_models_classes_LtiService;
-use taoLti_models_classes_LtiLaunchData;
+use tao_helpers_Uri;
 
 /**
  * LTI tool to review qti items
  */
-class PreviewTool extends taoLti_actions_ToolModule
+class PreviewTool extends ToolModule
 {
     /**
      * (non-PHPdoc)
-     * @see taoLti_actions_ToolModule::run()
+     * @see ToolModule::run()
      * @requiresRight id READ
+     * @return void
+     * @throws \InterruptedActionException
+     * @throws \ResolverException
+     * @throws \common_exception_IsAjaxAction
+     * @throws \oat\taoLti\models\classes\LtiException
+     * @throws \oat\taoLti\models\classes\LtiVariableMissingException
+     * @throws common_exception_Error
      */
     public function run()
     {
         if (!$this->hasRequestParameter('id')) {
             return $this->returnError(__('No item has been specified'));
         }
-        if(tao_helpers_Request::isAjax()){
+        if (tao_helpers_Request::isAjax()) {
             throw new common_exception_Error("Wrong request mode, this is a plain document.");
         }
 
         $item = new core_kernel_classes_Resource(tao_helpers_Uri::decode($this->getRequestParameter('id')));
         if (!$item->exists()) {
-            throw new common_exception_Error('We\'re unable to find the item '.$item->getUri());
+            throw new common_exception_Error('We\'re unable to find the item ' . $item->getUri());
         }
 
         $this->setData('client_config_url', $this->getClientConfigUrl());
 
-        $this->setData('previewUrl', \tao_helpers_Uri::url('index', 'QtiPreview', 'taoQtiItem', array('uri' => $item->getUri(), 'lang' => DEFAULT_LANG)));
+        $this->setData(
+            'previewUrl',
+            \tao_helpers_Uri::url(
+                'index',
+                'QtiPreview',
+                'taoQtiItem',
+                array('uri' => $item->getUri(), 'lang' => DEFAULT_LANG)
+            )
+        );
 
         //retrieve the return URL from the LTI session
-        $launchData = taoLti_models_classes_LtiService::singleton()->getLtiSession()->getLaunchData();
-        if ($launchData->hasVariable(taoLti_models_classes_LtiLaunchData::LAUNCH_PRESENTATION_RETURN_URL)) {
-            $this->setData('returnUrl', $launchData->getVariable(taoLti_models_classes_LtiLaunchData::LAUNCH_PRESENTATION_RETURN_URL));
+        $launchData = LtiService::singleton()->getLtiSession()->getLaunchData();
+        if ($launchData->hasVariable(LtiLaunchData::LAUNCH_PRESENTATION_RETURN_URL)) {
+            $this->setData('returnUrl', $launchData->getVariable(LtiLaunchData::LAUNCH_PRESENTATION_RETURN_URL));
         }
 
         $this->setData('content-template', array('QtiPreview/index.tpl', 'itemqtiCreator'));
