@@ -29,7 +29,7 @@ return array(
     'version' => '3.0.0',
 	'author' => 'Open Assessment Technologies SA',
 	'requires' => array(
-        'taoQtiItem' => '>=17.0.0',
+        'taoQtiItem' => '>=18.0.0',
         'taoLti' => '>=7.0.0'
     ),
     'managementRole' => 'http://www.tao.lu/Ontologies/generis.rdf#itemqtiCreatorManager',
