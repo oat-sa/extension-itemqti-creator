@@ -26,7 +26,7 @@ return array(
     'label' => 'QTI Item Creator',
     'description' => 'Editor for QTI items',
     'license' => 'GPL-2.0',
-    'version' => '3.0.0',
+    'version' => '3.1.0',
 	'author' => 'Open Assessment Technologies SA',
 	'requires' => array(
         'taoQtiItem' => '>=18.0.0',
