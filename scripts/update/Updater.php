@@ -23,6 +23,8 @@ namespace oat\itemqtiCreator\scripts\update;
 
 /**
  * Extension update script
+ *
+ * @deprecated use migrations instead. See https://github.com/oat-sa/generis/wiki/Tao-Update-Process
  */
 class Updater extends \common_ext_ExtensionUpdater
 {
@@ -34,5 +36,10 @@ class Updater extends \common_ext_ExtensionUpdater
     public function update($initialVersion)
     {
         $this->skip('1.0.0', '3.0.0');
+
+        //Updater files are deprecated. Please use migrations.
+        //See: https://github.com/oat-sa/generis/wiki/Tao-Update-Process
+
+        $this->setVersion($this->getExtension()->getManifest()->getVersion());
     }
 }
